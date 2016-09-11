@@ -9,55 +9,61 @@
 
 char reverse(char *str,int length)
 {
-char result =0;
-char temp;
+ char result =0;
+ char temp;
 
-int templen;
+ int templen;
 
-templen=length;
-if((length ==0)||(length >MAX_LEN))
-{
-result = 1;
+ templen=length;
+ if((length ==0)||(length >MAX_LEN))
+   {
+    result = 1;
+   }
+ else
+   {
+    while((templen/2)||(templen ==2))
+         {
+          temp = *str;
+          *str = *(str +(sizeof(char))*(templen-1));
+          *(str + (sizeof(char))*(templen -1)) = temp;
+          str++;
+          templen =templen-2;
+         }  
+   }
+ return(result);
 }
-else
+
+int stringlen(char *str)
 {
-while((templen/2)||(templen ==2))
-{
-temp = *str;
-*str = *(str +(sizeof(char))*(templen-1));
-*(str + (sizeof(char))*(templen -1)) = temp;
-str++;
-templen =templen-2;
-}
-}
-return(result);
+  int i;
+  while(*(str + (sizeof(char))*i) != '\0')
+       {
+	i++;
+       }
+  return i;
 }
 
 int main()
 {
-char arr[MAX_LEN];
-int arrlen,i=0,j=0;
-char finalreslt;
-printf("Please enter the length of the array to be reversed: \n");
-scanf("%d",&arrlen);
-printf("Please enter the array \n");
-scanf("%s",arr);
+ char arr[MAX_LEN];
+ int arrlen,i=0,j=0;
+ char finalreslt;
+ printf("Please enter the array \n");
+ scanf("%99[^\n]s",arr);
 
+ arrlen = stringlen(arr);
 
-finalreslt = reverse(arr,arrlen);
+ finalreslt = reverse(arr,arrlen);
 
-if(!finalreslt)
-{
-printf("the array in reverse is: \n");
-for(j =0; j < arrlen ; j++)
-{
-printf("%d %c \n",j,arr[j]);
-}
-}
-else
-{
-printf("wrong array or invalid length");
-}
-return 0;
+ if(!finalreslt)
+   {
+    printf("the string in reverse is: \n");
+    printf("%s \n",arr);
+   }
+ else
+   {
+   printf("invalid string");
+   }
+ return 0;
 }
 
