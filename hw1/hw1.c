@@ -4,6 +4,7 @@
 /* Date : 09/03/16				    */
 /****************************************************/
 #include <stdio.h>
+#include "hw1.h"
 #define MAX_LEN (100)
 
 char reverse(char *str,int length)
