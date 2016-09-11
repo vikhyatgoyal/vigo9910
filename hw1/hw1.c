@@ -35,7 +35,7 @@ char reverse(char *str,int length)
 
 int stringlen(char *str)
 {
-  int i;
+  int i=0;
   while(*(str + (sizeof(char))*i) != '\0')
        {
 	i++;
