@@ -2,7 +2,7 @@
 #define _HW1_H
 
 
-char reverse_string(char *str, int length);
+char reverse(char *str, int length);
 int stringlen(char *str);
 
 #endif

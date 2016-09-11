@@ -7,6 +7,7 @@
 #include "hw1.h"
 #define MAX_LEN (100)
 
+
 char reverse(char *str,int length)
 {
  char result =0;
@@ -41,29 +42,5 @@ int stringlen(char *str)
 	i++;
        }
   return i;
-}
-
-int main()
-{
- char arr[MAX_LEN];
- int arrlen,i=0,j=0;
- char finalreslt;
- printf("Please enter the array \n");
- scanf("%99[^\n]s",arr);
-
- arrlen = stringlen(arr);
-
- finalreslt = reverse(arr,arrlen);
-
- if(!finalreslt)
-   {
-    printf("the string in reverse is: \n");
-    printf("%s \n",arr);
-   }
- else
-   {
-   printf("invalid string");
-   }
- return 0;
 }
 
