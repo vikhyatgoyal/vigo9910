@@ -11,7 +11,7 @@ typedef long unsigned int ul;
 int main()
 {
 char arr[MAX_LEN];
-int arrlen,i=0,j=0;
+int arrlen;
 char finalreslt;
 
 printf("size of char  - %lu \n",(ul)sizeof(char));
