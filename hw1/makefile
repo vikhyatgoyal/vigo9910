@@ -10,7 +10,7 @@
 
 # Defining all the flags which we which to be included in teh compile process.
 # -wall flag enables displaying of all the warnings.
-CFLAGS	= -Wall
+CFLAGS	= -Wall 
 
 #COMPILER is a macro created to specify the type of compiler used depending on the platform.
 COMPILER= $(CC)
@@ -22,7 +22,7 @@ OUT	= main
 SOURCE	= main.c hw1.c
 
 #Macro for all the header files which are the prerequites for compilation.
-HEADER = hw1.h
+HEADER = hw1.h 
 
 #The macro OBJECT contains all the .o files which are the dependencies for generating teh executable file.
 # All the .c files are convered to .o file by the 
@@ -34,7 +34,7 @@ VPATH	= ./hw1
 #Remove the default sufix rules.
 .SUFFIXES :
 #making our own suffix rules.
-# $< makes sure that the rule runs for all the changed files ony.
+# $< makes sure that the rule runs for all the changed files only.
 .SUFFIXES: .o .c
 .c.o :
 	$(COMPILER) $(CFLAGS) -c $<
@@ -48,14 +48,14 @@ warning :
 	
 #Target for host machine with linux. This uses gcc compiler.
 linuxHost :
-	$(MAKE) $(MFLAGS) CC=gcc $(OUT)
+	$(MAKE) $(CFLAGS) CC=gcc $(OUT)
 
 #Target for Beagle bone board. this uses ARM-LINUX compiler.
 BBB :
-	$(MAKE) $(MFLAGS) CC=arm-linux-gnueabihf-gcc	$(OUT)
+	$(MAKE) $(CFLAGS) CC=arm-linux-gnueabihf-gcc	$(OUT)
 #Target for FRDM KL25z board. this uses ARM-none compiler. 
 FRDMKL25z :
-	$(MAKE) $(MFLAGS) CC=arm-none-eabi-gcc $(OUT)
+	$(MAKE) $(CFLAGS) CC=arm-none-eabi-gcc $(OUT)
 
 #Target for rules to generate the executable file. The prerequisites are object files.
 $(OUT) : $(OBJECT)
