@@ -46,7 +46,7 @@ printf("size of float*   - %lu \n",(ul)sizeof(float *));
 printf("size of void*    - %lu \n",(ul)sizeof(void*));
 printf("size of int8_t*  - %lu \n",(ul)sizeof(int8_t *));
 printf("size of int16_t* - %lu \n",(ul)sizeof(int16_t *));
-printf("size of int32_t* - %lu \n",(Ul)sizeof(int32_t *));
+printf("size of int32_t* - %lu \n",(ul)sizeof(int32_t *));
 printf("size of int32_t* - %lu \n",(ul)sizeof(int32_t *));
 
 
