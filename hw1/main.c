@@ -3,15 +3,16 @@
 #include "hw1.h"
 #define MAX_LEN (100)
 
+
 typedef long unsigned int ul;
+
+
 
 int main()
 {
 char arr[MAX_LEN];
 int arrlen,i=0,j=0;
 char finalreslt;
-
-
 
 printf("size of char  - %lu \n",(ul)sizeof(char));
 printf("size of int   - %lu \n",(ul)sizeof(int));
@@ -33,12 +34,21 @@ printf("size of int8_t*  - %lu \n",(ul)sizeof(ptr8si));
 printf("size of int16_t* - %lu \n",(ul)sizeof(ptr16si));
 printf("size of int32_t* - %lu \n",(ul)sizeof(ptr32si));
 printf("size of char*    - %lu \n",(ul)sizeof(char *));
+printf("size of int*     - %lu \n",(ul)sizeof(int*));
+printf("size of float*   - %lu \n",(ul)sizeof(float *));
+printf("size of void*    - %lu \n",(ul)sizeof(void*));
+printf("size of int8_t*  - %lu \n",(ul)sizeof(int8_t *));
+printf("size of int16_t* - %lu \n",(ul)sizeof(int16_t *));
+printf("size of int32_t* - %lu \n",(ul)sizeof(int32_t *));
+printf("size of char*    - %lu \n",(ul)sizeof(char *));
 printf("size of int*     - %lu \n",(ul)sizeof(int *));
 printf("size of float*   - %lu \n",(ul)sizeof(float *));
 printf("size of void*    - %lu \n",(ul)sizeof(void*));
 printf("size of int8_t*  - %lu \n",(ul)sizeof(int8_t *));
 printf("size of int16_t* - %lu \n",(ul)sizeof(int16_t *));
 printf("size of int32_t* - %lu \n",(Ul)sizeof(int32_t *));
+printf("size of int32_t* - %lu \n",(ul)sizeof(int32_t *));
+
 
  printf("Please enter the array \n");
  scanf("%99[^\n]s",arr);
