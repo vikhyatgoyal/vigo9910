@@ -2,17 +2,25 @@
 #include <stdint.h>
 #include "hw1.h"
 #define MAX_LEN (100)
+<<<<<<< HEAD
 <<<<<<< 170eb6eab53a327329d2a972cdafb957ca2705c3
 
 =======
 >>>>>>> Added cross compiler support .
 
 typedef long unsigned int ul;
+=======
+
+
+>>>>>>> 4d3e611fb8c4a35a9312413e99c2c6431a0d61e3
 
 int main()
 {
 
+<<<<<<< HEAD
 <<<<<<< 170eb6eab53a327329d2a972cdafb957ca2705c3
+=======
+>>>>>>> 4d3e611fb8c4a35a9312413e99c2c6431a0d61e3
 char *ptrchar;
 int *ptrint;
 float *ptrfloat;
@@ -20,15 +28,21 @@ int8_t *ptr8si;
 int16_t *ptr16si;
 int32_t *ptr32si;
 char arr[MAX_LEN];
+<<<<<<< HEAD
 =======
  char arr[MAX_LEN];
 >>>>>>> Added cross compiler support .
+=======
+>>>>>>> 4d3e611fb8c4a35a9312413e99c2c6431a0d61e3
  int arrlen,i=0,j=0;
  char finalreslt;
 
 
 
+<<<<<<< HEAD
 <<<<<<< 170eb6eab53a327329d2a972cdafb957ca2705c3
+=======
+>>>>>>> 4d3e611fb8c4a35a9312413e99c2c6431a0d61e3
 printf("size of char  - %lu \n",sizeof(char));
 printf("size of int   - %lu \n",sizeof(int));
 printf("size of float - %lu \n",sizeof(float));
@@ -55,6 +69,7 @@ printf("size of void*    - %lu \n",sizeof(void*));
 printf("size of int8_t*  - %lu \n",sizeof(int8_t *));
 printf("size of int16_t* - %lu \n",sizeof(int16_t *));
 printf("size of int32_t* - %lu \n",sizeof(int32_t *));
+<<<<<<< HEAD
 =======
 printf("size of char  - %lu \n",(ul)(sizeof(char)));
 printf("size of int   - %lu \n",(ul)(sizeof(int)));
@@ -83,6 +98,8 @@ printf("size of int8_t*  - %lu \n",(ul)(sizeof(int8_t *)));
 printf("size of int16_t* - %lu \n",(ul)(sizeof(int16_t *)));
 printf("size of int32_t* - %lu \n",(ul)(sizeof(int32_t *)));
 >>>>>>> Added cross compiler support .
+=======
+>>>>>>> 4d3e611fb8c4a35a9312413e99c2c6431a0d61e3
 
  printf("Please enter the array \n");
  scanf("%99[^\n]s",arr);
