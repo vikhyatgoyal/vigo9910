@@ -1,5 +1,4 @@
-CC=gcc
-ARMCC = arm-linux-gnueabi-gcc
+
 CFLAGS	= -g
 LD	= $(CC)
 LDFLAGS	=
@@ -20,7 +19,25 @@ VPATH	= ./hw1
 	@$(ECHO) "===== .c -> .o rule"
 	$(CC) $(CFLAGS) -c $<
 
+# do this for undefined target
+.DEFAULT :
+	@$(MAKE) help
+
+help :
+	@$(ECHO) "please call 'make xxx' where xxx=linuxHost|BBB|FR25z"
+	
+
 all : $(EXE)
+
+
+linuxHost :
+	$(MAKE) $(MFLAGS) CC=gcc LD=gcc	   			all
+
+BBB :
+	$(MAKE) $(MFLAGS) CC=arm-linux-gnueabi-gcc LD=segldr	all
+
+FR25z :
+	$(MAKE) $(MFLAGS) CC=xlc LD=ld				all
 
 $(EXE) : $(OBJS)
 	$(LD) -o $@ $(OBJS)
