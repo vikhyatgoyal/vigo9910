@@ -17,7 +17,7 @@
 /*return:    a pointer to the converted string		           */
 /*******************************************************************/
 
-uint8_t* my_itoa(uint8_t *str, int32_t data, int32_t base);
+int8_t* my_itoa(int8_t *str, int32_t data, int32_t base);
 
 /*******************************************************************/
 /*descrition: function used to convert an ASCII string to          */

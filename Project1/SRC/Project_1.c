@@ -89,11 +89,11 @@ aptr_3 = &arr[THIRD_POINTER_ELEMENT];
 #if(TEST_DATA == TEST_DATA_ON)
 
 void Project_1_DataCheck(void){
-  uint8_t arr[MAX_LEN];
+  int8_t arr[MAX_LEN];
   int32_t data,base;
-  uint8_t brr[MAX_LEN];
-  uint8_t crr[MAX_LEN],len;
-  int32_t bigData,endResult;
+  int8_t brr[MAX_LEN];
+  uint8_t crr[MAX_LEN];
+  int32_t bigData,endResult,len;
   int32_t littleData;
 
  /*****Test for itoa***************************************************/

@@ -5,53 +5,54 @@
 #  2) BeagleBone Black Board
 #  3) Freadom board FRDM KL25z.
 # Author: Vikhyat Goyal
+# Date: 09/15/2016
 #********************************************************************************************************************
 
 include source.mk
 CC = gcc
+#C99 standard supported.
 CFLAGS	= -Wall -std=c99 -g -O0 -I $(HDRPATH) -Wl,-Map=$(OUT).map
 
 COPY = scp
-BBBIP = root@192.168.7.2:/home/debian/bin/vikhyat
-
+#Path for source dumping in case of BBB
+BBBIP = root@192.168.7.2:/home/debian/bin/
+#Generated object file liberary
 LIB = libproject1.a
 
-#The macro is defined to specify the final executable output file name.
+#The final executable output file name.
 OUT = project
 
-#The macro OBJECT contains all the .o files which are the dependencies for generating teh executable file.
+#The macro OBJECT contains all the .o files which are the dependencies for generating the executable file.
 # All the .c files are convered to .o file by the 
-.PHONY = OBJECT
-OBJECT	= ${SOURCE:.c=.o}
+OBJECT:= ${SOURCE:.c=.o}
 
 # Make all the preprocessed files.
-.PHONY = PREPRO
-PREPRO	= ${SOURCE:.c=.i}
+PREPRO:= ${SOURCE:.c=.i}
 
 # Make all the assembly files.
-.PHONY = ASMFILE
-ASMFILE	= ${SOURCE:.c=.s}
+ASMFILE:= ${SOURCE:.c=.s}
 
-# Make all dependency files
+# Make all the assembly files.
+DEPEND:= ${SOURCE:.c=.dep}
 
 ifeq ($(ARCH),BBB)
-	CC=arm-linux-gnueabihf-gcc $(build)
+	#Compiler for Beagle bone board with linux OS
+	CC=arm-linux-gnueabihf-gcc
 else ifeq ($(ARCH), HOST)
-	cc = gcc 
+	#Host machine compiler
+	cc = gcc	
+	ARFLAG =	
 else ifeq ($(ARCH),FRDM)
+	#Freedom board compiler, No OS.
 	CC=arm-none-eabi-gcc
+	#flags required for compilation with no file system support for a OS board
         CROSS = --specs=rdimon.specs
+	ARFLAG =
 else
+	#Requirement: Build for HOST in case no platform is specified by user.
 	CC = gcc
 endif
 
-#Remove the default sufix rules.
-.SUFFIXES :
-#making our own suffix rules.
-# $< makes sure that the rule runs for all the changed files only.
-.SUFFIXES: .o .c
-.c.o : $(SOURCE)
-	$(CC) $(CFLAGS) -c $^
 
 #Throw a warning for undefined platforms
 .DEFAULT : $(SOURCE)
@@ -61,45 +62,71 @@ endif
 
 #Target for generating all preprocessed output files.
 .PHONY : Preprocess
-Preprocess:
+Preprocess:$(SOURCE)
 	make $(PREPRO)
 
-%.i : 
-	$(CC) -E $<
+#Suffix rule for generating dependency output file for a given source file.
+%.dep:%.c
+	$(CC) -I $(HDRPATH) -MM $< -o $@
 
-#Target for generating all asm files.
+#Suffix rule for generating preprocessed output file for a given source file.
+%.i :%.c 
+	$(CC) -I $(HDRPATH) -E $< -o $@
+
+#Target for generating all assembly files.
 .PHONY : asm-file
 asm-file:
 	make $(ASMFILE)
 
-%.S :
-	$(CC) -S $<
+#Suffix rule for generating assembly output file for a given source file.
+%.S :%.c
+	$(CC) $(CFLAGS) -I $(HDRPATH) -S $<
 
-%.o :
-	$(CC) -c $<
+#Suffix rule for generating object output file for a given source file.
+%.o :%.c
+	$(CC) $(CFLAGS) -I $(HDRPATH) -c $<
 
+#Target for generating object files for all the source files specified in SOURCE.
 .PHONY : compile-all
 compile-all: $(SOURCE)
 	$(CC) $(CFLAGS) -c $^
 
+#Target for generating executable file and the .dep files.
 .PHONY : build
 build: $(SOURCE)
 	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
+	make $(DEPEND)
+
+#Target for generating executable file with the size of each file specified in horizontal formatting.
+.PHONY : build-all
+build-all: $(SOURCE)
+	#Generate executable
+	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
+	#Display the size of output executable
 	size -B $(OUT)
 
+#Target for archiving all the object files into a liberary.
 .PHONY : build-lib
 build-lib : 
 	ar -r $(LIB)  $(OBJECT)
 
-.PHONY : OBJECT
-OBJECT : $(HEADER)
+#Target for dumping all the object files onto the terminal.
+.PHONY : OBJDUMP
+OBJDUMP:$(SOURCE)
+	#make clean makes sure that all the object files are created again and dumped.
+	make clean
+	#Generate object files
+	$(CC) $(CFLAGS) -c $^
+	#Dump the object files
+	objdump -s $(OBJECT)	
 
+#Target for dumping the executable file onto the BBB board.
 .PHONY : upload
 upload:
 	$(COPY) $(OUT) $(BBBIP)
 	
 
-#Target clean for deleting all the generated files.
+#Target for deleting all the generated files.
 .PHONY : clean
 clean :
-	-rm -f $(OUT) $(OBJECT)  $(LIB) $(OUT).map 
+	-rm -f $(OUT) $(OBJECT) $(PREPRO) $(ASMFILE) $(DEPEND) $(LIB) $(OUT).map

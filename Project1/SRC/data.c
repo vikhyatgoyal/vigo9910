@@ -17,6 +17,8 @@
 #define SWAP_FIRST_FORTH (uint32_t)(24)
 #define SWAP_SECOND_THIRD (uint32_t)(8)
 
+typedef long unsigned int ul;
+
 int Calculatestringlen(char *str)
 {
   int i=0;
@@ -27,6 +29,32 @@ int Calculatestringlen(char *str)
   return i;
 }
 
+int8_t Reverse_string(int8_t *src, uint32_t length)
+{
+int8_t result = 1;
+int8_t temp;
+int templen;
+
+ templen=length;
+
+/*check if the any of the pointer is a NULL pointer.*/
+ if((src == NULL)||(length == 0)) {
+    result = 0;
+   }
+/*check if there is enough space in memory for the reverse*/
+ /*if(src + length*(sizeof(uint8_t)) > MAX_MEMORY_ADDRESS) {
+    length = MAX_MEMORY_ADDRESS;
+    }*/
+ while((templen/2)||(templen ==2))
+         {
+          temp = *src;
+          *src = *(src +(sizeof(uint8_t))*(templen-1));
+          *(src + (sizeof(uint8_t))*(templen -1)) = temp;
+          src++;
+          templen =templen-2;
+         } 
+return(result);
+}
 
 
 /*******************************************************************/
@@ -37,9 +65,9 @@ int Calculatestringlen(char *str)
 /*return:    a pointer to the converted string		           */
 /*******************************************************************/
 
-uint8_t* my_itoa(uint8_t *str, int32_t data, int32_t base)
+int8_t* my_itoa(int8_t *str, int32_t data, int32_t base)
 {
- uint8_t *ptr;
+ int8_t *ptr;
  uint8_t rem = 0, Nflag = 0;
  ptr = str;
  *str++ = '\0';
@@ -67,7 +95,7 @@ Nflag = 1;
      }
  }
 /*reverse the string*/	
-my_reverse(ptr,(str - ptr));
+Reverse_string(ptr,(str - ptr));
 return (str);
 }
 
@@ -107,7 +135,7 @@ int32_t my_atoi(int8_t *str)
 void dump_memory(uint8_t *start, uint32_t length)
 {
  while(length--) {
-  printf("value at | %d = %c | \n",start , *start++);
+  printf("value at | %x | \n", *start++);
  }
 }
 
