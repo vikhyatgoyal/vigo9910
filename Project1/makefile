@@ -9,23 +9,30 @@
 
 include source.mk
 CC = gcc
-CFLAGS	= -Wall -g -O0 -I $(HDRPATH) -Wl,-Map=$(OUT).map
+CFLAGS	= -Wall -std=c99 -g -O0 -I $(HDRPATH) -Wl,-Map=$(OUT).map
 
 COPY = scp
 BBBIP = root@192.168.7.2:/home/debian/bin/vikhyat
 
+LIB = libproject1.a
+
 #The macro is defined to specify the final executable output file name.
-OUT	= project
+OUT = project
 
 #The macro OBJECT contains all the .o files which are the dependencies for generating teh executable file.
 # All the .c files are convered to .o file by the 
+.PHONY = OBJECT
 OBJECT	= ${SOURCE:.c=.o}
+
 # Make all the preprocessed files.
+.PHONY = PREPRO
 PREPRO	= ${SOURCE:.c=.i}
+
 # Make all the assembly files.
+.PHONY = ASMFILE
 ASMFILE	= ${SOURCE:.c=.s}
-# Make all the object dump files.
-OBJDMP	= ${SOURCE:.c=.dep}
+
+# Make all dependency files
 
 ifeq ($(ARCH),BBB)
 	CC=arm-linux-gnueabihf-gcc $(build)
@@ -33,7 +40,7 @@ else ifeq ($(ARCH), HOST)
 	cc = gcc 
 else ifeq ($(ARCH),FRDM)
 	CC=arm-none-eabi-gcc
-        CROSS = 
+        CROSS = --specs=rdimon.specs
 else
 	CC = gcc
 endif
@@ -43,25 +50,27 @@ endif
 #making our own suffix rules.
 # $< makes sure that the rule runs for all the changed files only.
 .SUFFIXES: .o .c
-.c.o :
-	$(COMPILER) $(CFLAGS) -c $<
+.c.o : $(SOURCE)
+	$(CC) $(CFLAGS) -c $^
 
 #Throw a warning for undefined platforms
-DEFAULT : $(SOURCE)
+.DEFAULT : $(SOURCE)
 	@echo "No platform specified.Building for HOST platform"
 	@echo "please use BBB for beaglebone, HOST for host machine and FRDM for freedom board"
 	$(CC) $(CFLAGS) -o $(OUT) $^
 
 #Target for generating all preprocessed output files.
+.PHONY : Preprocess
 Preprocess:
-	$(CC) $(PREPRO)
+	make $(PREPRO)
 
 %.i : 
 	$(CC) -E $<
 
 #Target for generating all asm files.
+.PHONY : asm-file
 asm-file:
-	$(CC) $(ASMFILE)
+	make $(ASMFILE)
 
 %.S :
 	$(CC) -S $<
@@ -69,17 +78,28 @@ asm-file:
 %.o :
 	$(CC) -c $<
 
+.PHONY : compile-all
 compile-all: $(SOURCE)
-	$(CC) -c $^
+	$(CC) $(CFLAGS) -c $^
 
+.PHONY : build
 build: $(SOURCE)
-	$(CC) -o $(OUT) $(CFLAGS) $^
-	size -A $(OUT)
+	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
+	size -B $(OUT)
+
+.PHONY : build-lib
+build-lib : 
+	ar -r $(LIB)  $(OBJECT)
+
+.PHONY : OBJECT
 OBJECT : $(HEADER)
+
+.PHONY : upload
 upload:
 	$(COPY) $(OUT) $(BBBIP)
 	
 
 #Target clean for deleting all the generated files.
+.PHONY : clean
 clean :
-	-rm -f $(OUT) $(OBJECT) $(OUT).map 
+	-rm -f $(OUT) $(OBJECT)  $(LIB) $(OUT).map 
