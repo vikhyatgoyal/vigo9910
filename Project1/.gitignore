@@ -1,0 +1,25 @@
+#files to ignore 
+
+# Object files 
+*.o
+
+# Assembly files
+*.s
+
+# Changable Linux swap files
+*.swp
+
+# Preprocessor output files
+*.i
+
+# Dependency files
+*.dep
+
+# Libraries
+*.a
+
+# Map files
+*.map
+
+# Final project executable
+project
