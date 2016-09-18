@@ -24,6 +24,6 @@ uint8_t my_faulthandleing(uint8_t errorcode);
 /*******************************************************************/
 void project_1_report(void);
 
-void Project_1_DataCheck(void);
+void Project_1_DataCheck(uint32_t testselected);
 
 #endif

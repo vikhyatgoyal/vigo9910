@@ -24,6 +24,10 @@
 #if(TEST_DATA == TEST_DATA_ON)
 #endif
 
+#if(TEST_DATA == TEST_DATA_ON)
+ typedef void (*TestFunction_t)(void);
+#endif
+
 static uint8_t FAULT_SET = FALSE;
 
 /*******************************************************************/
@@ -88,15 +92,10 @@ aptr_3 = &arr[THIRD_POINTER_ELEMENT];
 
 #if(TEST_DATA == TEST_DATA_ON)
 
-void Project_1_DataCheck(void){
-  int8_t arr[MAX_LEN];
-  int32_t data,base;
-  int8_t brr[MAX_LEN];
-  uint8_t crr[MAX_LEN];
-  int32_t bigData,endResult,len;
-  int32_t littleData;
-
- /*****Test for itoa***************************************************/
+void test_my_itoa(void){
+ int8_t arr[MAX_LEN];
+ int32_t data,base;
+/*****Test for itoa***************************************************/
  printf("Testing my_itoa function \n");
  printf("please enter the integer to be converted to string \n");
  scanf("%d",&data);
@@ -107,7 +106,12 @@ void Project_1_DataCheck(void){
 
  printf("the string equivalent is: \n");
  printf("%s \n",arr);
+}
 
+
+void test_my_atoi(void){
+ uint32_t data;
+ int8_t brr[MAX_LEN];
  /*****Test for my_atoi function ******************/
  printf("Testing my_atoi function \n");
  printf("Please enter the string \n");
@@ -116,6 +120,11 @@ void Project_1_DataCheck(void){
  printf("the integer equivalent is: \n");
  printf("%d \n",data);
 
+}
+void test_dump_memory(void){
+ uint8_t crr[MAX_LEN];
+ uint32_t len;
+ 
  /*****Test for dump_memory function ******************/
  printf("Testing dump_memory function \n");
  printf("Please enter the string \n");
@@ -123,19 +132,41 @@ void Project_1_DataCheck(void){
  printf("Please enter the length \n");
  scanf("%d",&len);
  dump_memory(crr,len);
-
+}
+void test_big_to_little(void){
+ int32_t bigData,endResult;
+ 
  /*****Test for big_to_little function ******************/
  printf("Testing big_to_little function \n");
  printf("Please enter the big endian data \n");
  scanf("%d",&bigData);
  endResult = big_to_little(bigData);
  printf("The data in little endian is %d \n",endResult);
+}
 
+void test_little_to_big(void){
+ int32_t littleData,endResult;
+ 
  /*****Test for little_to_big function ******************/
  printf("Testing little_to_big function \n");
  printf("Please enter the little endian data \n");
  scanf("%d",&littleData);
  endResult = little_to_big(littleData);
  printf("The data in big endian is %d \n",endResult);
+}
+
+
+void Project_1_DataCheck(uint32_t testselected){
+ 
+ TestFunction_t test[5];
+
+ test[0] = &test_my_itoa;
+ test[1] = &test_my_atoi;
+ test[2] = &test_dump_memory;
+ test[3] = &test_big_to_little;
+ test[4] = &test_little_to_big;
+ 
+ test[testselected]();
+
 }
 #endif

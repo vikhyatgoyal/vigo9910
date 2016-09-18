@@ -15,7 +15,7 @@ CFLAGS	= -Wall -std=c99 -g -O0 -I $(HDRPATH) -Wl,-Map=$(OUT).map
 
 COPY = scp
 #Path for source dumping in case of BBB
-BBBIP = root@192.168.7.2:/home/debian/bin/
+BBBIP = root@192.168.7.2:/home/debian/bin/release
 #Generated object file liberary
 LIB = libproject1.a
 
@@ -47,7 +47,7 @@ else ifeq ($(ARCH),FRDM)
 	CC=arm-none-eabi-gcc
 	#flags required for compilation with no file system support for a OS board
         CROSS = --specs=rdimon.specs
-	ARFLAG =
+	ARFLAG = -mthumb -mcpu=cortex-m0plus
 else
 	#Requirement: Build for HOST in case no platform is specified by user.
 	CC = gcc
@@ -66,11 +66,11 @@ Preprocess:$(SOURCE)
 	make $(PREPRO)
 
 #Suffix rule for generating dependency output file for a given source file.
-%.dep:%.c
+%.dep: %.c
 	$(CC) -I $(HDRPATH) -MM $< -o $@
 
 #Suffix rule for generating preprocessed output file for a given source file.
-%.i :%.c 
+%.i : %.c 
 	$(CC) -I $(HDRPATH) -E $< -o $@
 
 #Target for generating all assembly files.
@@ -79,36 +79,50 @@ asm-file:
 	make $(ASMFILE)
 
 #Suffix rule for generating assembly output file for a given source file.
-%.S :%.c
-	$(CC) $(CFLAGS) -I $(HDRPATH) -S $<
+%.S :  %.c
+	$(CC) $(CFLAGS) -I $(HDRPATH) -S $< -o $@
 
+ifeq ($(USCMD),OBJECTDUMP)
 #Suffix rule for generating object output file for a given source file.
-%.o :%.c
+%.o : %.c
 	$(CC) $(CFLAGS) -I $(HDRPATH) -c $<
+	objdump -s $@	
+else
+#Suffix rule for generating object output file for a given source file.
+%.o : %.c
+	$(CC) $(CFLAGS) -I $(HDRPATH) -c $<
+endif
 
 #Target for generating object files for all the source files specified in SOURCE.
 .PHONY : compile-all
 compile-all: $(SOURCE)
 	$(CC) $(CFLAGS) -c $^
 
+ifeq ($(USCMD),ARV)
 #Target for generating executable file and the .dep files.
 .PHONY : build
 build: $(SOURCE)
 	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
 	make $(DEPEND)
-
-#Target for generating executable file with the size of each file specified in horizontal formatting.
-.PHONY : build-all
-build-all: $(SOURCE)
-	#Generate executable
-	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
 	#Display the size of output executable
 	size -B $(OUT)
+	ar -r $(LIB)  $(DUMPOBJ)
+else
+#Target for generating executable file and the .dep files.
+.PHONY : build
+build: $(SOURCE)
+	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
+	make $(DEPEND)
+	#Display the size of output executable
+	size -B $(OUT)
+endif
+
 
 #Target for archiving all the object files into a liberary.
 .PHONY : build-lib
 build-lib : 
-	ar -r $(LIB)  $(OBJECT)
+	make $(OBJECT)
+	ar -r $(LIB)  $(DUMPOBJ)
 
 #Target for dumping all the object files onto the terminal.
 .PHONY : OBJDUMP
@@ -123,6 +137,8 @@ OBJDUMP:$(SOURCE)
 #Target for dumping the executable file onto the BBB board.
 .PHONY : upload
 upload:
+	ssh root@192.168.7.2 "rm -r /home/debian/bin/release"	
+	ssh root@192.168.7.2 "mkdir /home/debian/bin/release"
 	$(COPY) $(OUT) $(BBBIP)
 	
 
