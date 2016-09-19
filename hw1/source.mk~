@@ -1,0 +1,4 @@
+
+SOURCE = main.c memory.c data.c project_1.c
+
+VPATH = SRC

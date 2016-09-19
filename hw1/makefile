@@ -7,29 +7,33 @@
 # Author: Vikhyat Goyal
 #********************************************************************************************************************
 
+include source.mk
+CC = gcc
+CFLAGS	= -Wall -g -O0 -Wl,-Map=$(OUT).map
 
-# Defining all the flags which we which to be included in teh compile process.
-# -wall flag enables displaying of all the warnings.
-CFLAGS	= -Wall 
-
-#COMPILER is a macro created to specify the type of compiler used depending on the platform.
-COMPILER= $(CC)
+COPY = scp
+BBBIP = root@192.168.7.2
+REMOTE_PATH = /home/debian/bin/vikhyat
 
 #The macro is defined to specify the final executable output file name.
-OUT	= main
-
-#The macro SOURCE contains all teh .c files which we are interested in compiling.
-SOURCE	= main.c hw1.c
+OUT	= project
 
 #Macro for all the header files which are the prerequites for compilation.
-HEADER = hw1.h 
+#HEADER = hw1.h
 
 #The macro OBJECT contains all the .o files which are the dependencies for generating teh executable file.
 # All the .c files are convered to .o file by the 
 OBJECT	= ${SOURCE:.c=.o}
 
-#Specify the directories to be checked.
-VPATH	= ./hw1
+ifeq ($(ARCH),BBB)
+	CC=arm-linux-gnueabihf-gcc $(build)
+else ifeq ($(ARCH), HOST)
+	cc = gcc 
+else ifeq ($(ARCH),FRDM)
+	CC=arm-none-eabi-gcc
+else
+	CC = gcc
+endif
 
 #Remove the default sufix rules.
 .SUFFIXES :
@@ -40,29 +44,39 @@ VPATH	= ./hw1
 	$(COMPILER) $(CFLAGS) -c $<
 
 #Throw a warning for undefined platforms
-.DEFAULT :
-	@$(MAKE) warning
+DEFAULT : $(SOURCE)
+	@echo "No platform specified.Building for HOST platform"
+	@echo "please use BBB for beaglebone, HOST for host machine and FRDM for freedom board"
+	$(CC) $(CFLAGS) -o $(OUT) $^
 
-warning :
-	@echo "please call 'make xxx' where xxx=linuxHost|BBB|FR25z"
+#Target for generating all preprocessed output files.
+Preprocess:
+	$(CC) -E $<
+
+%.i : 
+	$(CC) -E $<
+
+#Target for generating all asm files.
+asm-file:$(SOURCE)
+	$(CC) -S $^
+
+%.S :
+	$(CC) -S $<
+
+%.o :
+	$(CC) -c $<
+
+compile-all: $(SOURCE)
+	$(CC) -c $^
+
+build: $(SOURCE)
+	$(CC) -o $(OUT) $(CFLAGS) $^
+	size -A $(OUT)
+OBJECT : $(HEADER)
+upload:
+	$(COPY) project $(BBBIP)/$(REMOTE_PATH)
 	
-#Target for host machine with linux. This uses gcc compiler.
-linuxHost :
-	$(MAKE) $(CFLAGS) CC=gcc $(OUT)
-
-#Target for Beagle bone board. this uses ARM-LINUX compiler.
-BBB :
-	$(MAKE) $(CFLAGS) CC=arm-linux-gnueabihf-gcc	$(OUT)
-#Target for FRDM KL25z board. this uses ARM-none compiler. 
-FRDMKL25z :
-	$(MAKE) $(CFLAGS) CC=arm-none-eabi-gcc $(OUT)
-
-#Target for rules to generate the executable file. The prerequisites are object files.
-$(OUT) : $(OBJECT)
-	$(COMPILER) -o $@ $(OBJECT)
-#Target for object file generation. Prerequsites are the header files
-$(OBJECT) : $(HEADER)
 
 #Target clean for deleting all the generated files.
 clean :
-	-rm -f $(OUT) $(OBJECT)
+	-rm -f $(OUT) $(OBJECT) $(OUT).map 

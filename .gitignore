@@ -1,0 +1,17 @@
+#files to ignore 
+ 
+*.o
+
+*.s
+
+*.swp
+
+*.i
+
+*.dep
+
+*.a
+
+*.map
+
+project
