@@ -25,5 +25,11 @@
 /* TEST_DATA to TEST_DATA_ON to enable data file testing. */
 /* TEST_DATA set to TEST_DATA_OFF to disable data file testing */
 
+/* FRDM KL25z compilation should not compile a code with printf or scanf statements*/
+
+#ifdef POISON
+ #pragma GCC poison printf sprint fprint
+#endif
+
 
 #endif
