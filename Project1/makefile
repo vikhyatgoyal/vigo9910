@@ -53,7 +53,7 @@ else
 	CC = gcc
 endif
 
-ifeq ($(PROJECT1),ON)
+ifneq ($(PROJECT1),OFF)
 	DFLAG = -DPROJECT_1=1
 endif
 
