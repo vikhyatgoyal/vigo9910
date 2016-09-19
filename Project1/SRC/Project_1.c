@@ -57,7 +57,7 @@ return(0);
 /*******************************************************************/
 void project_1_report(void){
 uint8_t arr[MAX_DATA_ARRAY];
-uint8_t *aptr_1 , *aptr_2, *aptr_3;
+uint8_t *aptr_1 = NULL , *aptr_2 = NULL , *aptr_3 = NULL;
 uint8_t i = 0, j = 0,result = 0;
 
 aptr_1 = &arr[FIRST_POINTER_ELEMENT];
