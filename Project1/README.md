@@ -1,4 +1,4 @@
-#### This file is to be used for ECEN5013 "Embedded Software Essential" cours"e in University of Colorado, Boulder 
+#### This file is to be used for ECEN5013 "Embedded Software Essential" course in University of Colorado, Boulder 
 #### The make file is used as a build system with three platform support.
 #### The supported platforms are : Linux HOST machine, Beagle Bone Board with linux OS, Freedom FRDM KL25z board.
 #### Author : Vikhyat Goyal & Rishi Soni
@@ -14,7 +14,7 @@
 
 #### Notes:	
 ####		   1) The Build commands requires the user to input the architecture "ARCH" for which the execuatble needs to be 			      generated.
-####		   2) The makefile take HOST architecture as default if teh ARCH value is not specified.
+####		   2) The makefile take HOST architecture as default if the ARCH value is not specified.
 		   
 
 **Adding new .c source files to the build system**
