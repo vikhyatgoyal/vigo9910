@@ -53,6 +53,14 @@ else
 	CC = gcc
 endif
 
+ifeq ($(PROJECT1),ON)
+	DFLAG = -DPROJECT_1=1
+endif
+
+ifeq ($(TESTMODE),ON)
+	DFLAG += -DTEST=1
+endif
+
 
 #Throw a warning for undefined platforms
 .DEFAULT : $(SOURCE)
@@ -102,7 +110,7 @@ ifeq ($(USCMD),ARV)
 #Target for generating executable file and the .dep files.
 .PHONY : build
 build: $(SOURCE)
-	$(CC) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
+	$(CC) $(DFLAG) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
 	make $(DEPEND)
 	#Display the size of output executable
 	size -B $(OUT)
@@ -111,7 +119,7 @@ else
 #Target for generating executable file and the .dep files.
 .PHONY : build
 build: $(SOURCE)
-	$(CC) $(CROSS) $(CFLAGS) -o -v  $(OUT)  $^
+	$(CC) $(DFLAG) $(CROSS) $(CFLAGS) -o  $(OUT)  $^
 	make $(DEPEND)
 	#Display the size of output executable
 	size -B $(OUT)
@@ -120,9 +128,8 @@ endif
 
 #Target for archiving all the object files into a liberary.
 .PHONY : build-lib
-build-lib : 
-	make $(OBJECT)
-	ar -r $(LIB)  $(DUMPOBJ)
+build-lib : $(DUMPSRC)
+	ar -r $(LIB)  $^
 
 #Target for dumping all the object files onto the terminal.
 .PHONY : OBJDUMP
