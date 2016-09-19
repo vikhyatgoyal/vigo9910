@@ -71,117 +71,118 @@
 **Syntax for using makefile options**
 
 **clean**
-1) This command delets all the generated files from the directory. It deletes executable output, map files, assembly files, object files,dependency files and the prerocessed files
-2) call the target directly with the command "clean"
+1) This command deletes all the generated files from the directory. It deletes the executable outputs, map files, assembly files, object files,dependency files and the prerocessed files.
+2) Call the target directly with the command "clean"
 
-	*format:*
-	 make clean	
+   *Format:*
+		_make clean_
 
 **build**
-1) This command generates the executable along with the display for size of the generated file on terminal.
-2) The build output generated teh .dep files along with the executable file.
-2) call the target directly with the command "build" and add the ARCH value to specify the platform for which the output should be generated.
+1) This command generates the executable and displays the size of the generated file on the terminal.
+2) The build output generates the .dep files along with the executable file.
+2) Call the target directly with the command "build" and add the ARCH value to specify the platform for which the output should be generated.
    The values supported by the ARCH variable are as follows:
-	HOST - use this for buidling the system for linux machine. It uses gcc compiler.
-	BBB  - use this for buidling the system for beagle bone board. It uses arm-linux-gnueabihf-gcc compiler. 
-	FRDM - use this for buidling the system for freedom  board. It uses arm-linux-none-gcc compiler.
+   
+	HOST - use this for building the system for the host Linux machine. It uses the host gcc compiler.
+	BBB  - use this for building the system for the BeagleBone Black. It uses the arm-linux-gnueabihf-gcc toolchain. 
+	FRDM - use this for buidling the system for the Freescale Freedom KL25Z board. It uses the arm-linux-none-gcc toolchain.
 
-	*format:*
-	 make build ARCH=XXX
+	*Format:*
+	 _make build ARCH=XXX_
 
-	*example:*
-	 make build ARCH=HOST
+	*Example:*
+	 _make build ARCH=HOST_
 
 **compile-all**
-1) This command generates object files for all the source .c files available in the SOURCE folder but does not link them.
-2) call the target directly with command "compile-all"
+1) This command generates the object files for all the source .c files available in the SOURCE folder but does not link them.
+2) Call the target directly with command "compile-all"
 
-	*format:*
-	 make compile-all
+	*Format:*
+	 _make compile-all_
 
 **build-lib**
-1) This command generated a liberary file with archived memory.o and data.o files.
+1) This command generates a library file with archived the 'memory.o' and 'data.o' files.
 2) The archive file is generated in the same path as the makefile.
 
-	*format:*
-	 make build-lib
+	*Format:*
+	 _make build-lib_
 
 **upload**
 1) This command copies the generated executable file into the BBB bin directory.
-2) The BBB should be connected with the host machine and the conntection setup with BBB ip 192.168.7.2 and host ip as 192.168.7.1
+2) The BBB should be connected with the host machine and the connection setup with BBB is on the following IP address: 192.168.7.2, with host IP as 192.168.7.1
 
-	*format:*
-	 make upload
+	*Format:*
+	 _make upload_
 
-**%.0**
-1) This generates the object file for the .c file specified by the user.The object file is not linked and is creted at teh same directory as the makefile
-2) The cammand can be called directly with the .o file to be generated.
+**%.o**
+1) This generates the object file for the .c file specified by the user.The object file is not linked and is creted in the same directory as the makefile
+2) This command can be called directly along with the .o file to be generated.
 
-	*format:*
-	 make example.o
+	*Format:*
+	 _make example.o_
 
-	*example:*
-	 make memory.o
+	*Example:*
+	 _make memory.o_
 
 **Preprocess**
-1) This generates the preprocedded output for all the source files.
-2) The cammand can be called directly with make cammand.
+1) This generates the preprocessed output for all the source files.
+2) This command can be called directly with the _make_ command.
 
-	*format:*
-	 make Preprocess
+	*Format:*
+	 _make Preprocess_
 
 **%.i**
-1) This generates the preprocedded output for all a specific source file.
-2) The cammand can be called with the name of the file to be generated.
+1) This generates the preprocessed output for a specific source file.
+2) This command can be called with the name of the file to be generated.
 
-	*format:*
-	 make example.i
+	*Format:*
+	 _make example.i_
 
-	*example:*
-	 make memory.i
+	*Example:*
+	 _make memory.i_
 
 **asm-file**
-1) This generates the assembly file for all the source files as specified in SOURCE.
-2) The cammand can be called directly with make.
+1) This generates the assembly file for all the source files as specified in the SOURCE variable.
+2) This command can be called directly with _make_.
 
-	*format:*
-	 make asm-file
+	*Format:*
+	 _make asm-file_
 
 **%.s**
 1) This generates the assembly file output for all a specific source file.
-2) The cammand can be called with the name of the file to be generated.
+2) This command can be called with the name of the file to be generated.
 
-	*format:*
-	 make example.s
+	*Format:*
+	 _make example.s_
 
-	*example:*
-	 make memory.s
+	*Example:*
+	 _make memory.s_
 
 **OBJDUMP**
 1) This command dumps all the object files to the terminal.
 
-	*format:*
-	 make OBJDUMP
+	*Format:*
+	 _make OBJDUMP_
 
-**Using the object dump GNU binutil**
-1) The OBJECTDUMP cammand when upended with the object file to be dumped prints the specific object file on teh terminal.
+**Using the object dump from the GNU binutil package**
+1) The OBJECTDUMP command when upended with the object file to be dumped, prints the specific object file on the terminal.
 2) Use the make command with OSCMD as OBJECTDUMP
 
-	*format:*
-	 make OSCMD=OBJECTDUMP example.o
+	*Format:*
+	 _make OSCMD=OBJECTDUMP example.o_
 
-	*example:*
-	 make OSCMD=OBJECTDUMP memory.o
+	*Example:*
+	 _make OSCMD=OBJECTDUMP memory.o_
 
-**Using the ar (archive) GNU binutil**
-1) The AR cammand given with user cammand USCMD creates a archive with the object files specified in DUMPOBJ.
+**Using ar (archive) from the GNU binutil package**
+1) The AR cammand given with the user command USCMD creates a archive with the object files specified in DUMPOBJ.
 2) Use the make command with OSCMD as ARV
 
-	*format:*
-	 make build OSCMD=ARV
+	*Format:*
+	 _make build OSCMD=ARV_
 
-	*example:*
-	 make build OSCMD=ARV
+	*Example:*
+	 _make build OSCMD=ARV_
 
 #### Executing the build output file
 
@@ -189,8 +190,5 @@
 1) The output file is always named "project"
 2) call the execution by using dot-backslash command.
 
-	*format:*
-	 ./project
-
-
-
+	*Format:*
+	 _./project_
