@@ -121,6 +121,10 @@ int32_t my_atoi(int8_t *str)
     result = result*10 + (*str++ -'0'); /* assuming base 10 always*/
    }
   }
+  else
+  {
+   result =0;
+  }
  return (negative*result); 
 }
 
