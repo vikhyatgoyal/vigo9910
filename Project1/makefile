@@ -4,7 +4,7 @@
 #  1) Linux based host machine.
 #  2) BeagleBone Black Board
 #  3) Freadom board FRDM KL25z.
-# Author: Vikhyat Goyal
+# Author: Vikhyat Goyal and Rishi Soni
 # Date: 09/15/2016
 #********************************************************************************************************************
 
