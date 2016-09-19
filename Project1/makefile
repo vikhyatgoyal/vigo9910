@@ -57,8 +57,12 @@ ifneq ($(PROJECT1),OFF)
 	DFLAG = -DPROJECT_1=1
 endif
 
-ifeq ($(TESTMODE),ON)
-	DFLAG += -DTEST=1
+ifeq ($(TEST1MODE),ON)
+	DFLAG += -DTEST1=1
+endif
+
+ifeq ($(TEST2MODE),ON)
+	DFLAG += -DTEST2=1
 endif
 
 

@@ -8,8 +8,10 @@
 int main()
 {
  #if(TEST_DATA == TEST_DATA_ON)
- #ifdef TEST
+ #ifdef TEST1
   uint32_t DATAFunction2Test_u8; 
+ #endif
+  #ifdef TEST2
   uint32_t MEMFunction2Test_u8;
  #endif
  #endif
@@ -21,7 +23,7 @@ int main()
  #endif
 
  #if(TEST_DATA == TEST_DATA_ON)
- #ifdef TEST
+ #ifdef TEST1
   printf("\nStarting check for data file \n");
   printf("Use below table to chose the function to be tested: \n");
   printf("| 0 = my_itoa        | \n");
@@ -32,7 +34,8 @@ int main()
   printf("Enter your choice \n");
   scanf("%d",&DATAFunction2Test_u8);
   Project_1_DataCheck(DATAFunction2Test_u8);
-
+  #endif
+  #ifdef TEST2
   printf("\nStarting check for memory file \n");
   printf("Use below table to chose the function to be tested: \n");
   printf("| 0 = my_memmove        | \n");
