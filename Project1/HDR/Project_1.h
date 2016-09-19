@@ -26,4 +26,6 @@ void project_1_report(void);
 
 void Project_1_DataCheck(uint32_t testselected);
 
+void Project_1_MemoryCheck(uint32_t test2selected);
+
 #endif

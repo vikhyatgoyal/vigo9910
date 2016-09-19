@@ -155,6 +155,69 @@ void test_little_to_big(void){
  printf("The data in big endian is %d \n",endResult);
 }
 
+void test_my_memmove(void) {
+
+ int8_t result;
+ uint8_t arr[100], brr[100];
+ uint32_t len;
+ printf("PLease enter the data to be moved in the form of a string : \n");
+ scanf("%s",arr);
+ printf("enter the length to be moved: \n");
+ scanf("%d",&len);
+ result = my_memmove(arr, brr, len);
+ if(result)
+ {
+  printf("the data moved to destination is : \n");
+  dump_memory(brr,len);
+ }
+ else
+ {
+  printf("test failed");
+ }
+
+}
+
+void test_my_memzero(void) {
+ int8_t result;
+ uint8_t arr[100];
+ uint32_t len;
+ printf("Please enter the data to be zeroed in the form of a string : \n");
+ scanf("%s",arr);
+ printf("enter the length to be moved: \n");
+ scanf("%d",&len);
+ result = my_memzero(arr, len);
+ if(result)
+ {
+  printf("the data is zeroed at destination is : \n");
+  dump_memory(arr,len);
+ }
+ else
+ {
+   printf("test failed");
+ }
+
+}
+
+void test_my_reverse(void) {
+ int8_t result;
+ uint8_t arr[100];
+ uint32_t len;
+ printf("Please enter the string to be reversed : \n");
+ scanf("%s",arr);
+ printf("enter the length of the string to be reversed: \n");
+ scanf("%d",&len);
+ result = my_reverse(arr, len);
+ if(result)
+ {
+  printf("the reverse ordered string is : \n");
+  dump_memory(arr,len);
+ }
+ else
+ {
+  printf("test failed");
+ }
+
+}
 
 void Project_1_DataCheck(uint32_t testselected){
  
@@ -167,6 +230,18 @@ void Project_1_DataCheck(uint32_t testselected){
  test[4] = &test_little_to_big;
  
  test[testselected]();
+
+}
+
+void Project_1_MemoryCheck(uint32_t test2selected){
+ 
+ TestFunction_t test2[3];
+
+ test2[0] = &test_my_memmove;
+ test2[1] = &test_my_memzero;
+ test2[2] = &test_my_reverse;
+ 
+ test2[test2selected]();
 
 }
 #endif

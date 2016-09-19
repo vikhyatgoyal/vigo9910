@@ -27,19 +27,12 @@ int8_t result = 1;
  if((src == NULL)||(dst == NULL)) {
     result = 0;
    }
-/*check if there is an overall between the memory blocks.*/
- /*if(((src + length*(sizeof(uint8_t)) > dst)
-    ||(dst + length*(sizeof(uint8_t)) > MAX_MEMORY_ADDRESS))) {
-    result = 0;
-   }
- else*/ {
     while(length) {
           *dst = *src;
            src++;
            dst++;
 	   length--;
          }
-   }
 return(result);
 }
 
@@ -60,6 +53,7 @@ int8_t result = 1;
     result = 0;
    }
 /*check if there is enough space in memory for the length*/
+/*This check is disabled as the memory size is project and board dependent*/
  /*if(src + length*(sizeof(uint8_t)) > MAX_MEMORY_ADDRESS) {
     length = MAX_MEMORY_ADDRESS;
     }*/
@@ -91,6 +85,7 @@ int templen;
     result = 0;
    }
 /*check if there is enough space in memory for the reverse*/
+/*This check is disabled as the memory size is project and board dependent*/
  /*if(src + length*(sizeof(uint8_t)) > MAX_MEMORY_ADDRESS) {
     length = MAX_MEMORY_ADDRESS;
     }*/
