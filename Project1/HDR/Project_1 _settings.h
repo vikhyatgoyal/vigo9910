@@ -12,9 +12,9 @@
 #define PROJECT_1_COMPILE_ON   1
 /* PROJECT_1_COMPILE_ON - compilation of project 1 is swicthed ON */
 
-#define PROJECT_1 PROJECT_1_COMPILE_ON
-/* PROJECT_1 set to PROJECT_1_COMPILE_ON to compile Project_1*/
-/* PROJECT_1 set to PROJECT_1_COMPILE_OFF to not compile Project_1*/
+#define PROJECT_1_COMPILE PROJECT_1_COMPILE_ON
+/* PROJECT_1_COMPILE set to PROJECT_1_COMPILE_ON to compile Project_1*/
+/* PROJECT_1_COMPILE set to PROJECT_1_COMPILE_OFF to not compile Project_1*/
 
 #define TEST_DATA_OFF  0 
 /* TEST_DATA_OFF - testing for data file is swicthed ON */

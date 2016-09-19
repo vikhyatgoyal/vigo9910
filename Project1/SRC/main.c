@@ -7,27 +7,33 @@
 
 int main()
 {
-#if(TEST_DATA == TEST_DATA_ON)
-uint32_t Function2Test_u8; 
-#endif
+ #if(TEST_DATA == TEST_DATA_ON)
+ #ifdef TEST
+  uint32_t Function2Test_u8; 
+ #endif
+ #endif
 
-#if(PROJECT_1 == PROJECT_1_COMPILE_ON)
-project_1_report();
-#endif
+ #if(PROJECT_1_COMPILE == PROJECT_1_COMPILE_ON)
+   #ifdef PROJECT_1
+     project_1_report();
+   #endif
+ #endif
 
-#if(TEST_DATA == TEST_DATA_ON)
-printf("\nStarting check for data file \n");
-printf("Use below table to chose the function to be tested: \n");
-printf("| 0 = my_itoa        | \n");
-printf("| 1 = my_atoi        | \n");
-printf("| 2 = dump_memory    | \n");
-printf("| 3 = big_to_little  | \n");
-printf("| 4 = little_to_big  | \n");
-printf("Enter your choice \n");
-scanf("%d",&Function2Test_u8);
-Project_1_DataCheck(Function2Test_u8);
-#endif
+ #if(TEST_DATA == TEST_DATA_ON)
+ #ifdef TEST
+  printf("\nStarting check for data file \n");
+  printf("Use below table to chose the function to be tested: \n");
+  printf("| 0 = my_itoa        | \n");
+  printf("| 1 = my_atoi        | \n");
+  printf("| 2 = dump_memory    | \n");
+  printf("| 3 = big_to_little  | \n");
+  printf("| 4 = little_to_big  | \n");
+  printf("Enter your choice \n");
+  scanf("%d",&Function2Test_u8);
+  Project_1_DataCheck(Function2Test_u8);
+ #endif
+ #endif
 
-return (0);
+ return (0);
 }
 
