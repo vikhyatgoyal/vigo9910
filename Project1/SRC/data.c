@@ -67,7 +67,7 @@ return(result);
 
 int8_t* my_itoa(int8_t *str, int32_t data, int32_t base)
 {
- int8_t *ptr;
+ int8_t *ptr = NULL;
  uint8_t rem = 0, Nflag = 0;
  ptr = str;
  *str++ = '\0';
