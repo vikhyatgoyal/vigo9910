@@ -47,6 +47,7 @@ else ifeq ($(ARCH),FRDM)
 	CC=arm-none-eabi-gcc
 	#flags required for compilation with no file system support for a OS board
         CROSS = --specs=rdimon.specs
+	DFLAG = -DPOISON=1
 	ARFLAG = -mthumb -mcpu=cortex-m0plus
 else
 	#Requirement: Build for HOST in case no platform is specified by user.
@@ -54,7 +55,7 @@ else
 endif
 
 ifneq ($(PROJECT1),OFF)
-	DFLAG = -DPROJECT_1=1
+	DFLAG += -DPROJECT_1=1
 endif
 
 ifeq ($(TESTMODE),ON)
